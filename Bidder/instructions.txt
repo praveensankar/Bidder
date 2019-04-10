@@ -1,0 +1,17 @@
+1)sudo su
+2)docker rm -f $(docker ps -aq)
+3)docker rmi -f $(docker images | grep fabcar | awk '{print $3}')
+4)cd /media/praveen/praveen/blockchain/fabric-samples/basic-network
+5)./start.sh
+6)cd /media/praveen/praveen/blockchain/fabric-samples/Bidder/configuration
+7)docker-compose -f docker-compose.yml up -d Bidder1Blockchain
+8)cd ../contract/
+9)npm install -g --unsafe-perm
+10)docker exec Bidder1Blockchain peer chaincode install -n bidder1contract -v 0 -p /opt/gopath/src/github.com/contract -l node
+11)docker exec Bidder1Blockchain peer chaincode instantiate -n bidder1contract -v 0 -l node -c '{"Args":["bidder:instantiate","painting","public key","10","sealed"]}' -C mychannel -P "AND ('Org1MSP.member')"
+
+
+reset : 
+
+1) cd /media/praveen/praveen/blockchain/fabric-samples/basic-network
+2)./stop.sh
